@@ -1,0 +1,19 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "frontend for the survey project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johannes-schreurs-SP2/frontend.git"
+  },
+  "author": "johannes schreurs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johannes-schreurs-SP2/frontend/issues"
+  },
+  "homepage": "https://github.com/johannes-schreurs-SP2/frontend#readme"
+}
