@@ -27,6 +27,10 @@ function App() {
       })
   }, [])
 
+  const deleteHandler = (id) => {
+    console.log("Deleting item with id: " + id)
+  }
+
   if (loading) return <div>Loading Surveys...</div>
   if (error) return <div>{error}</div>
 
@@ -38,8 +42,30 @@ function App() {
         surveys.map(survey => {
           return(
             <div key={survey.id}>
-              <div>Id: {survey.id}, name: {survey.name}, questions: {survey.questions.map(question => <li key={question.id}>{question.question} {question.answers.map(answer => <div key={answer.id}>------{answer.answer}</div>)}</li>)}</div>
-              
+              <h3>{survey.name}</h3>
+              <button>Remove</button>
+              <div>questions:</div>
+              <ul>
+                {survey.questions.map(question => {
+                  return (
+                    <li key={question.id}>
+                      <label>{question.question}</label>
+                      <button>Remove</button>
+                      {question.answers.map((answer, index) => {
+                        return (
+                          <div key={answer.id}>
+                            <label >- {answer.answer}</label>
+                            <button onClick={() => deleteHandler(answer.id)}>Remove</button>
+                            <button>Update</button>
+                          </div>
+                        );
+                      })}
+                    </li>
+                  );
+                })}
+              </ul>
+              <button>Add question</button>
+              <hr />
             </div>
           )
         })
