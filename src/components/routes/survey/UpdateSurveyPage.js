@@ -108,9 +108,7 @@ class UpdateSurveyPage extends React.Component {
             .then(json => {
                 if (json !== undefined)
                     this.setState({
-                        survey: {
-                            questions: [...this.state.survey.questions, json]
-                        },
+                        questions: [...this.state.survey.questions, json]
                     });
                     this.componentDidMount();
             })
@@ -201,7 +199,7 @@ class UpdateSurveyPage extends React.Component {
                                                                 return(
                                                                     <div key={answer.id}>
                                                                         <label>---{answer.answer}</label>
-                                                                        <button onClick={() => this.deleteAnswerHandler(answer.id)}>Delete this option</button>
+                                                                        <button onClick={() => this.deleteAnswerHandler(answer.id)}>Remove this option</button>
                                                                     </div>
                                                                 )
                                                             })
