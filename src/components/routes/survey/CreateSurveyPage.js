@@ -1,10 +1,23 @@
 import React from 'react'
 
-const CreateSurveyPage = () => {
+class CreateSurveyPage extends React.Component {
 
-    return (
-        <div>Making a new survey</div>
-    )
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            
+        }
+    }
+
+
+    render() {
+        return (
+            <div>
+                <p>create survey with id: {this.props.match.params.id}</p>
+            </div>
+        )
+    }
 }
 
 export default CreateSurveyPage;

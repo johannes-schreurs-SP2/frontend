@@ -2,7 +2,7 @@ import React from 'react';
 
 const SurveyItem = ({survey}) => {
     return(
-        <p>{survey.name} {survey.dateCreated}</p>
+        <h3>{survey.name} {survey.dateCreated}</h3>
     )
 }
 
