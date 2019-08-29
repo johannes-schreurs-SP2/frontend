@@ -15,6 +15,7 @@ class Home extends Component {
 
         this.changeHandler = this.changeHandler.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
+        this.deleteHandler = this.deleteHandler.bind(this);
     }
 
     componentDidMount = () => {
@@ -77,6 +78,23 @@ class Home extends Component {
             });
         }
 
+        deleteHandler (id) {
+            fetch(`http://localhost:8080/surveys/${id}`, {
+            method: "DELETE",
+            headers: {
+                'accept': 'application/json'
+            }
+        })
+        .then(res => {
+            if(res.ok) {
+                this.componentDidMount();
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        })
+        }
+
     render() {
 
         if(this.state.redirect) {
@@ -99,6 +117,10 @@ class Home extends Component {
                                         <Link to={"/update/" + survey.id}>
                                         ----Update survey
                                         </Link>
+                                        <button onClick={() => this.deleteHandler(survey.id)}>Delete this survey</button>
+                                        <br/>
+                                        <br/>
+                                        <br/>
                                     </div>
                                 )
                             })
