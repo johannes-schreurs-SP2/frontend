@@ -20,7 +20,7 @@ class Home extends Component {
 
     componentDidMount = () => {
         //Fetch surveys
-        fetch("http://localhost:8080/surveys", {
+        fetch("http://localhost:8080/surveys/ordered", {
             method: "GET",
             headers: {
                 'accept': 'application/json',
