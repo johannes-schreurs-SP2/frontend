@@ -11,7 +11,7 @@ class UpdateSurveyPage extends React.Component {
         this.state = {
             loading: true,
             redirect: false,
-            title: ""
+            deleting: false
         }
 
         this.deleteSurveyHandler = this.deleteSurveyHandler.bind(this);
@@ -40,6 +40,7 @@ class UpdateSurveyPage extends React.Component {
     }
 
     deleteQuestionHandler(id) {
+        this.setState({deleting: true})
         fetch(`http://localhost:8080/questions/${id}`, {
             method: "DELETE",
             headers: {
@@ -49,6 +50,7 @@ class UpdateSurveyPage extends React.Component {
         .then(res => {
             if(res.ok) {
                 this.componentDidMount();
+                this.setState({deleting: false})
             }
         })
         .catch(err => {
@@ -146,7 +148,7 @@ class UpdateSurveyPage extends React.Component {
             .then(json => {
                 if (json !== undefined)
                     this.setState({
-                            answers: {...this.state.answers, json}
+                            answers: {...this.state.answers, json},
                     });
                     this.componentDidMount();
             })
@@ -156,6 +158,7 @@ class UpdateSurveyPage extends React.Component {
         }
 
         deleteAnswerHandler(id) {
+            this.setState({deleting: true})
             fetch(`http://localhost:8080/answers/${id}`, {
             method: "DELETE",
             headers: {
@@ -165,6 +168,7 @@ class UpdateSurveyPage extends React.Component {
             .then(res => {
                 if(res.ok) {
                     this.componentDidMount();
+                    this.setState({deleting: false})
                 }
             })
             .catch(err => {
@@ -192,21 +196,21 @@ class UpdateSurveyPage extends React.Component {
                                             return (
                                                 <li key={question.id}>
                                                     <label>{question.question}</label> 
-                                                    <button onClick={() => this.deleteQuestionHandler(question.id)}>Remove this question</button>
+                                                    <button onClick={() => this.deleteQuestionHandler(question.id)} disabled={this.state.deleting ? true : false}>Remove this question</button>
                                                     <br/>     
                                                     {
                                                         (!question.answers ? null :
                                                             question.answers.map(answer => {
                                                                 return(
                                                                     <div key={answer.id}>
-                                                                        <label>---{answer.answer}</label>
-                                                                        <button onClick={() => this.deleteAnswerHandler(answer.id)}>Remove this option</button>
+                                                                        <label>{answer.answer}</label>
+                                                                        <button onClick={() => this.deleteAnswerHandler(answer.id)} disabled={this.state.deleting ? true : false}>Remove this option</button>
                                                                     </div>
                                                                 )
                                                             })
                                                         )
                                                     }
-                                                    <input name={"answer"} onChange={this.changeAnswerHandler}/>
+                                                    <input name={"answer"} onChange={this.changeAnswerHandler} type="text" />
                                                     <button onClick={() => this.addAnswerHandler(question.id)}>Add this option to the question</button> 
                                                     <br/> 
                                                     <br/>   
@@ -216,7 +220,7 @@ class UpdateSurveyPage extends React.Component {
                                         })
                                     }
                                 </ul>
-                                <input name={"question"} onChange={this.changeHandler}/>
+                                <input name={"question"} onChange={this.changeHandler} />
                                 <button onClick={this.addQuestionHandler}>Add a question to this survey</button>
                                 <br />
                                 <br />
