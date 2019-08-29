@@ -9,7 +9,8 @@ class UpdateSurveyPage extends React.Component {
 
         this.state = {
             loading: true,
-            redirect: false
+            redirect: false,
+            title: ""
         }
 
         this.deleteSurveyHandler = this.deleteSurveyHandler.bind(this);
@@ -46,7 +47,6 @@ class UpdateSurveyPage extends React.Component {
         })
         .then(res => {
             if(res.ok) {
-                console.log("deleting");
                 this.componentDidMount();
             }
         })
@@ -75,7 +75,6 @@ class UpdateSurveyPage extends React.Component {
                 survey: json,
                 loading: false
             })
-            console.log(this.state);
         })
         .catch(err => {
             console.log(err);
@@ -132,7 +131,6 @@ class UpdateSurveyPage extends React.Component {
         }
 
         addAnswerHandler(id) {
-            console.log("adding");
             fetch(`http://localhost:8080/answers/question/${id}`, {
             method: "POST",
             headers: {
@@ -148,7 +146,6 @@ class UpdateSurveyPage extends React.Component {
             }) 
             .then(json => {
                 if (json !== undefined)
-                    console.log(this.state);
                     this.setState({
                             answers: {...this.state.answers, json}
                     });
@@ -168,7 +165,6 @@ class UpdateSurveyPage extends React.Component {
             })
             .then(res => {
                 if(res.ok) {
-                    console.log("deleting");
                     this.componentDidMount();
                 }
             })
@@ -198,7 +194,7 @@ class UpdateSurveyPage extends React.Component {
                                                 <li key={question.id}>
                                                     <label>{question.question}</label> 
                                                     <button onClick={() => this.deleteQuestionHandler(question.id)}>Remove this question</button>
-                                                    <br />
+                                                    <br/>     
                                                     {
                                                         (!question.answers ? null :
                                                             question.answers.map(answer => {
@@ -212,8 +208,10 @@ class UpdateSurveyPage extends React.Component {
                                                         )
                                                     }
                                                     <input name={"answer"} onChange={this.changeAnswerHandler}/>
-                                                    <button onClick={() => this.addAnswerHandler(question.id)}>Add an option to this question</button>    
-                                                     
+                                                    <button onClick={() => this.addAnswerHandler(question.id)}>Add an option to this question</button> 
+                                                    <br/> 
+                                                    <br/>   
+                                                    <br/>     
                                                 </li> 
                                                 )
                                         })
