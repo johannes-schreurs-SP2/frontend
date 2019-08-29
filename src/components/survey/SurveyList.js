@@ -1,4 +1,5 @@
 import React, { Component} from 'react';
+import AnswerItem from '../answer/AnswerItem';
 
 class SurveyList extends Component {
     state = {
@@ -48,7 +49,7 @@ class SurveyList extends Component {
                                         {
                                             question.answers.map(answer => {
                                                 return(
-                                                    <li key={answer.id}>{answer.answer}</li>
+                                                    <AnswerItem key={answer.id} answer={answer}/>
                                                 )
                                             })
                                         }

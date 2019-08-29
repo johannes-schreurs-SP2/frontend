@@ -2,7 +2,7 @@ import React from 'react'
 
 const AnswerItem = ({answer}) => {
     return (
-        <p>----{answer.answer}</p>
+        <li>{answer.answer}</li>
     )
 }
 

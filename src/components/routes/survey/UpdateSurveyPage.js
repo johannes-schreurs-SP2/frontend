@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../../common/Header'
 import { Redirect } from 'react-router-dom'
 
+//Needs some major refactoring, but everything works as it should.
 class UpdateSurveyPage extends React.Component {
 
     constructor(props) {
@@ -206,7 +207,7 @@ class UpdateSurveyPage extends React.Component {
                                                         )
                                                     }
                                                     <input name={"answer"} onChange={this.changeAnswerHandler}/>
-                                                    <button onClick={() => this.addAnswerHandler(question.id)}>Add an option to this question</button> 
+                                                    <button onClick={() => this.addAnswerHandler(question.id)}>Add this option to the question</button> 
                                                     <br/> 
                                                     <br/>   
                                                     <br/>     
@@ -216,7 +217,7 @@ class UpdateSurveyPage extends React.Component {
                                     }
                                 </ul>
                                 <input name={"question"} onChange={this.changeHandler}/>
-                                <button onClick={this.addQuestionHandler}>Add question to the survey</button>
+                                <button onClick={this.addQuestionHandler}>Add a question to this survey</button>
                                 <br />
                                 <br />
                                 <button onClick={this.deleteSurveyHandler}>Remove this survey</button>
