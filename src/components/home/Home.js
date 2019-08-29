@@ -9,7 +9,8 @@ class Home extends Component {
         super(props);
 
         this.state = {
-            redirect: false
+            redirect: false,
+            loading: true
         }
 
         this.changeHandler = this.changeHandler.bind(this);
@@ -80,13 +81,13 @@ class Home extends Component {
 
         if(this.state.redirect) {
             return (
-                <Redirect push to={"/create/" + this.state.surveys[this.state.surveys.length - 1].id}/>
+                <Redirect push to={"/update/" + this.state.surveys[this.state.surveys.length - 1].id}/>
             )
         }
 
         return(
                 <div>
-                    <h2>Surveys</h2>
+                    <h2>Alle surveys:</h2>
                     {
                     (this.state.loading) ? <div>Fetching surveys...</div> : (
                             (!this.state.surveys) ? null : this.state.surveys.map(survey => {
