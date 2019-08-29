@@ -42,7 +42,18 @@ class SurveyList extends Component {
                         {
                             this.state.survey.questions.map(question => {
                                 return(
-                                    <p key={question.id}>{question.question}</p>
+                                    <div key={question.id}>
+                                        <label>{question.question}</label>
+                                        <ul>
+                                        {
+                                            question.answers.map(answer => {
+                                                return(
+                                                    <li key={answer.id}>{answer.answer}</li>
+                                                )
+                                            })
+                                        }
+                                        </ul>
+                                    </div>
                                 )
                             })
                         }
