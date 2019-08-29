@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function App() {
+const App = () => {
 
   const [surveys, setSurveys] = useState([])
   const [loading, setLoading] = useState(false)
@@ -10,7 +10,12 @@ function App() {
     setLoading(true)
     setError(null)
 
-    fetch('http://localhost:8080/surveys')
+    fetch('http://localhost:8080/surveys', {
+      method: "GET",
+      headers: {
+          'accept': 'application/json',
+      }
+    })
       .then(res => res.json())
       .then(json => {
         setLoading(false)
@@ -27,8 +32,38 @@ function App() {
       })
   }, [])
 
-  const deleteHandler = (id) => {
-    console.log("Deleting item with id: " + id)
+  const deleteHandler = (type, id) => {
+    fetch(`http://localhost:8080/${type}/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+          })
+          .then(json => {
+            console.log("deleted");
+          })
+          .catch(err => {
+            console.log(err)
+          })
+  }
+
+  const updateHandler = (type, object) => {
+    console.log(object.id)
+    fetch(`http://localhost:8080/${type}/`, {
+      method: 'PUT',
+      body: JSON.stringify(object),
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(json => {
+      console.log('updated')
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 
   if (loading) return <div>Loading Surveys...</div>
@@ -50,13 +85,17 @@ function App() {
                   return (
                     <li key={question.id}>
                       <label>{question.question}</label>
-                      <button>Remove</button>
-                      {question.answers.map((answer, index) => {
+                      <button onClick={() => deleteHandler("questions", question.id)}>Remove</button>
+                      {question.answers.map((answer) => {
                         return (
                           <div key={answer.id}>
                             <label >- {answer.answer}</label>
-                            <button onClick={() => deleteHandler(answer.id)}>Remove</button>
-                            <button>Update</button>
+                            <button onClick={() => deleteHandler("answers", answer.id)}>Remove</button>
+                            <input name="update" id="test"></input>
+                            <button onClick={() => updateHandler("answers", {
+                              'id': answer.id,
+                              'answer': document.getElementById('test').value
+                            })}>Update</button>
                           </div>
                         );
                       })}
