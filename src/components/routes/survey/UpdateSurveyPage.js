@@ -195,15 +195,21 @@ class UpdateSurveyPage extends React.Component {
                                         this.state.survey.questions.map(question => {
                                             return (
                                                 <li key={question.id}>
-                                                    <label>{question.question}</label> 
+                                                    <label>{question.question}</label>
+                                                    <br />
+                                                    <laberl>Has this questions multiple answers?</laberl>
+                                                    <input type="checkbox" value={"hasMultipleAnswers"}  />
+                                                    <br />
                                                     <button onClick={() => this.deleteQuestionHandler(question.id)} disabled={this.state.deleting ? true : false}>Remove this question</button>
                                                     <br/>     
+                                                    <br />
+
                                                     {
                                                         (!question.answers ? null :
                                                             question.answers.map(answer => {
                                                                 return(
                                                                     <div key={answer.id}>
-                                                                        <label>{answer.answer}</label>
+                                                                        <label>--{answer.answer}</label>
                                                                         <button onClick={() => this.deleteAnswerHandler(answer.id)} disabled={this.state.deleting ? true : false}>Remove this option</button>
                                                                     </div>
                                                                 )
