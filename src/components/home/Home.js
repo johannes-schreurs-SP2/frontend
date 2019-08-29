@@ -10,7 +10,8 @@ class Home extends Component {
 
         this.state = {
             redirect: false,
-            loading: true
+            loading: true,
+            deleting: false
         }
 
         this.changeHandler = this.changeHandler.bind(this);
@@ -79,6 +80,8 @@ class Home extends Component {
         }
 
         deleteHandler (id) {
+            this.setState({deleting : true})
+
             fetch(`http://localhost:8080/surveys/${id}`, {
             method: "DELETE",
             headers: {
@@ -88,6 +91,7 @@ class Home extends Component {
         .then(res => {
             if(res.ok) {
                 this.componentDidMount();
+                this.setState({deleting : false})
             }
         })
         .catch(err => {
@@ -117,7 +121,7 @@ class Home extends Component {
                                         <Link to={"/update/" + survey.id}>
                                         ----Update survey
                                         </Link>
-                                        <button onClick={() => this.deleteHandler(survey.id)}>Delete this survey</button>
+                                        <button onClick={() => this.deleteHandler(survey.id)}>Remove this survey</button>
                                         <br/>
                                         <br/>
                                         <br/>
