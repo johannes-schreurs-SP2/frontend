@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import SurveyItem from '../survey/SurveyItem';
 import { Link, Redirect } from 'react-router-dom';
+import Logout from '../login/Logout';
+import Login from '../login/Login';
 
 class Home extends Component {
 
@@ -11,7 +13,8 @@ class Home extends Component {
         this.state = {
             redirect: false,
             loading: true,
-            deleting: false
+            deleting: false,
+            loggedIn: false
         }
 
         this.changeHandler = this.changeHandler.bind(this);
@@ -21,26 +24,48 @@ class Home extends Component {
 
     componentDidMount = () => {
         //Fetch surveys
-        fetch("http://localhost:8080/surveys/ordered", {
-            method: "GET",
-            headers: {
-                'accept': 'application/json',
-            }
-        })
-        .then(res => {
-            if(res.ok) {
-                this.setState({loading: false});
-                return res.json();
-            } else {
-                console.log("Error fetching");
-            }
-        })
-        .then(json => {
-            this.setState({surveys: json})
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        this.isLoggedIn();
+        if(this.state.loggedIn) {
+            fetch("http://localhost:8080/surveys/user/" + window.localStorage.getItem('userId'), {
+                method: "GET",
+                headers: {
+                    'accept': 'application/json',
+                }
+            })
+            .then(res => {
+                if(res.ok) {
+                    this.setState({loading: false});
+                    return res.json();
+                } else {
+                    console.log("Error fetching");
+                }
+            })
+            .then(json => {
+                this.setState({surveys: json})
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        }
+    }
+
+    isLoggedIn = () => {
+        const authToken = window.localStorage.getItem("authToken");
+        if (authToken !== null
+            && authToken !== "") {
+            this.setState({loggedIn: true});
+        } else {
+            this.setState({loggedIn: false});
+        }
+    };
+
+    loginChangeHandler = () => {
+        this.isLoggedIn();
+        this.componentDidMount();
+    };
+
+    logoutHandler = () => {
+        this.isLoggedIn();
     }
 
     changeHandler(event){
@@ -54,7 +79,7 @@ class Home extends Component {
     }
 
     submitHandler() {
-        fetch("http://localhost:8080/surveys/user/1", {
+        fetch("http://localhost:8080/surveys/user/" + window.localStorage.getItem('userId'), {
             method: "POST",
             headers: {
                 'accept': 'application/json',
@@ -107,12 +132,19 @@ class Home extends Component {
             )
         }
 
+        if(!this.state.loggedIn) {
+            return(
+                <Login loginHandler={this.loginChangeHandler}/>
+            )
+        }
+
         return(
                 <div>
-                    <h2>Alle surveys:</h2>
+                    <Logout logoutHandler={this.logoutHandler}/>
+                    <h2>Your surveys:</h2>
                     {
                     (this.state.loading) ? <div>Fetching surveys...</div> : (
-                            (!this.state.surveys) ? null : this.state.surveys.map(survey => {
+                            (!this.state.surveys) ? <div>No surveys created yet!</div> : this.state.surveys.map(survey => {
                                 return (
                                     <div key={survey.id}>
                                         <Link to={"/survey/" + survey.id}>

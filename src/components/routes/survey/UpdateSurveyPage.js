@@ -89,6 +89,7 @@ class UpdateSurveyPage extends React.Component {
         let value = event.target.value;
         let newQuestion = {...this.state.newQuestion};
         newQuestion[name] = value;
+        //newQuestion[hasMultipleAnswers] = somevalue;
         this.setState({
             newQuestion: newQuestion
         })
@@ -197,7 +198,7 @@ class UpdateSurveyPage extends React.Component {
                                                 <li key={question.id}>
                                                     <label>{question.question}</label>
                                                     <br />
-                                                    <laberl>Has this questions multiple answers?</laberl>
+                                                    <label>Has this questions multiple answers?</label>
                                                     <input type="checkbox" value={"hasMultipleAnswers"}  />
                                                     <br />
                                                     <button onClick={() => this.deleteQuestionHandler(question.id)} disabled={this.state.deleting ? true : false}>Remove this question</button>
