@@ -90,7 +90,6 @@ class UpdateSurveyPage extends React.Component {
         let value = event.target.value;
         let newQuestion = {...this.state.newQuestion};
         newQuestion[name] = value;
-        //newQuestion[hasMultipleAnswers] = somevalue;
         this.setState({
             newQuestion: newQuestion
         })
@@ -181,7 +180,6 @@ class UpdateSurveyPage extends React.Component {
         updateOption = (e, id) => {
             let value = e.target.checked
             let name = e.target.name;
-            console.log(name, value)
             fetch("http://localhost:8080/questions", {
                 method: "PUT",
                 headers: {
@@ -199,7 +197,6 @@ class UpdateSurveyPage extends React.Component {
                 }
             })
             .then(json => {
-                console.log(json);
                 this.componentDidMount();
             })
             .catch(err => {
