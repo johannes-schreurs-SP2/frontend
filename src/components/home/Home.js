@@ -25,7 +25,6 @@ class Home extends Component {
     componentDidMount = () => {
         //Fetch surveys
         this.isLoggedIn();
-        if(this.state.loggedIn) {
             fetch("http://localhost:8080/surveys/user/" + window.localStorage.getItem('userId'), {
                 method: "GET",
                 headers: {
@@ -46,7 +45,7 @@ class Home extends Component {
             .catch(err => {
                 console.log(err);
             })
-        }
+        
     }
 
     isLoggedIn = () => {

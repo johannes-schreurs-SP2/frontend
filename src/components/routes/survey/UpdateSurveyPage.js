@@ -11,7 +11,8 @@ class UpdateSurveyPage extends React.Component {
         this.state = {
             loading: true,
             redirect: false,
-            deleting: false
+            deleting: false,
+            question: {}
         }
 
         this.deleteSurveyHandler = this.deleteSurveyHandler.bind(this);
@@ -177,6 +178,34 @@ class UpdateSurveyPage extends React.Component {
             })
         }
        
+        updateOption = (e, id) => {
+            let value = e.target.checked
+            let name = e.target.name;
+            console.log(name, value)
+            fetch("http://localhost:8080/questions", {
+                method: "PUT",
+                headers: {
+                    'accept': 'application/json',
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: id,
+                    hasMultipleAnswer: value
+                })
+            })
+            .then(res => {
+                if(res.ok) {
+                    return res.json();
+                }
+            })
+            .then(json => {
+                console.log(json);
+                this.componentDidMount();
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
 
     render() {
 
@@ -199,7 +228,7 @@ class UpdateSurveyPage extends React.Component {
                                                     <label>{question.question}</label>
                                                     <br />
                                                     <label>Has this questions multiple answers?</label>
-                                                    <input type="checkbox" value={"hasMultipleAnswers"}  />
+                                                    <input type="checkbox" name={"hasMultipleAnswers"} onChange={(e) => this.updateOption(e, question.id)} checked={question.hasMultipleAnswer ? true : false}/>
                                                     <br />
                                                     <button onClick={() => this.deleteQuestionHandler(question.id)} disabled={this.state.deleting ? true : false}>Remove this question</button>
                                                     <br/>     
