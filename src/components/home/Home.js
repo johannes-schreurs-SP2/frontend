@@ -5,7 +5,7 @@ import Logout from '../login/Logout';
 import Login from '../login/Login';
 
 class Home extends Component {
-
+    _isMounted = false;
 
     constructor(props) {
         super(props);
@@ -14,7 +14,9 @@ class Home extends Component {
             redirect: false,
             loading: true,
             deleting: false,
-            loggedIn: false
+            loggedIn: false,
+            otherSurveys: [],
+
         }
 
         this.changeHandler = this.changeHandler.bind(this);
@@ -24,7 +26,9 @@ class Home extends Component {
 
     componentDidMount = () => {
         //Fetch surveys
+        this._isMounted = true;
         this.isLoggedIn();
+            //Your own surveys
             fetch("http://localhost:8080/surveys/user/" + window.localStorage.getItem('userId'), {
                 method: "GET",
                 headers: {
@@ -40,12 +44,37 @@ class Home extends Component {
                 }
             })
             .then(json => {
-                this.setState({surveys: json})
+                if(this._isMounted) this.setState({surveys: json})
             })
             .catch(err => {
                 console.log(err);
             })
-        
+
+            //other people their surveys
+            fetch("http://localhost:8080/surveys/ordered", {
+                method: "GET",
+                headers: {
+                    'accept': 'application/json',
+                }
+            })
+            .then(res => {
+                if(res.ok) {
+                    this.setState({loading: false});
+                    return res.json();
+                } else {
+                    console.log("Error fetching");
+                }
+            })
+            .then(json => {
+                if(this._isMounted) this.setState({otherSurveys: json})
+            })
+            .catch(err => {
+                console.log(err);
+            })   
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     isLoggedIn = () => {
@@ -142,7 +171,7 @@ class Home extends Component {
                     <Logout logoutHandler={this.logoutHandler}/>
                     <h2>Your surveys:</h2>
                     {
-                    (this.state.loading) ? <div>Fetching surveys...</div> : (
+                    (this.state.loading) ? <div>Fetching your surveys...</div> : (
                             (!this.state.surveys) ? <div>No surveys created yet!</div> : this.state.surveys.map(survey => {
                                 return (
                                     <div key={survey.id}>
@@ -164,6 +193,33 @@ class Home extends Component {
                     <label>Survey Name:</label>
                     <input name={"name"} onChange={this.changeHandler}/>
                     <button onClick={this.submitHandler}>Create Survey</button>
+                    
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+
+                    <details>
+                    <summary style={
+                        {
+                            fontSize: 30,
+                            fontWeight: "bold"
+                        }
+                    }>See all other surveys</summary>
+                    {
+                        (this.state.loading) ? <div>Fetching other surveys...</div> : (
+                            (!this.state.otherSurveys) ? <div>No surveys created yet!</div> : this.state.otherSurveys.map(survey => {
+                                return (
+                                    <div key={survey.id}>
+                                        <Link to={"/survey/" + survey.id}>
+                                            <SurveyItem survey={survey}/>
+                                        </Link>
+                                    </div>
+                                )
+                            })
+                        )
+                    }
+                    </details>
                 </div>
         )
     }
