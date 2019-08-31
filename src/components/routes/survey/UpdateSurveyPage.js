@@ -179,7 +179,6 @@ class UpdateSurveyPage extends React.Component {
        
         updateOption = (e, id) => {
             let value = e.target.checked
-            let name = e.target.name;
             fetch("http://localhost:8080/questions", {
                 method: "PUT",
                 headers: {
