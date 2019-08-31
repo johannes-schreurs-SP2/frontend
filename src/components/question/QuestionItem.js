@@ -5,18 +5,16 @@ const QuestionItem = ({question}) => {
     let questionData = [];
     let [showBar, setShowBar] = useState(true);
 
-    question.answers.map((answer, index )=> {
-        let test = {}
-        test.name = answer.answer
+    question.answers.forEach((answer, index ) => {
+        let test = {};
+        test.name = answer.answer;
         test.index = index;
         let i = 0;
-        answer.userAnswers.map(userAnswer => {
+        answer.userAnswers.forEach(userAnswer => {
             test.amount = userAnswer.answered ? i += 1 : i+=0
-        })
+        });
         questionData.push(test);
     })
-
-    console.log(questionData);
 
     const clickHandler = () => {
         setShowBar(!showBar);
@@ -24,7 +22,7 @@ const QuestionItem = ({question}) => {
 
     return (
         <div>
-            <button onClick={clickHandler}>Show {showBar ? "Circle" : "Bar"}</button>
+            <button onClick={clickHandler}>Show {showBar ? "circle graph" : "bar graph"}</button>
             {
                 showBar ? <BarChart width={730} height={250} data={questionData}>
                         <CartesianGrid strokeDasharray="3 3" />
