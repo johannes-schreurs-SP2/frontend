@@ -1,11 +1,16 @@
 import React, { Component} from 'react';
 import AnswerItem from '../answer/AnswerItem';
+import QuestionItem from '../question/QuestionItem';
 
 class SurveyList extends Component {
-    state = {
-        survey: {},
-        loading: true
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            survey: {},
+            loading: true,
+
+        };
+    }
 
     componentDidMount = () => {
         //Fetch surveys
@@ -52,10 +57,14 @@ class SurveyList extends Component {
                                         {
                                             question.answers.map(answer => {
                                                 return(
-                                                    <AnswerItem key={answer.id} answer={answer}/>
+                                                    <AnswerItem key={answer.id}  answer={answer}/>
                                                 )
                                             })
+                                            
+                                            
                                         }
+                                       
+                                        <QuestionItem question={question}/>
                                         </ul>
                                     </div>
                                 )
