@@ -13,7 +13,6 @@ class Login extends React.Component {
 
         this.login = this.login.bind(this);
         this.onChange = this.onChange.bind(this);
-        this.abortController = new AbortController();
     }
 
 
@@ -28,13 +27,23 @@ class Login extends React.Component {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res => res.json())
+        .then(res => {
+            if(res.ok) return res.json()
+            else if(res.status === 500){
+                this.setState({
+                    error: true,
+                    errorMessage: "Wrong email or password"
+                })
+            }
+        })
         .then(json  => {
-            console.log(json)
-            window.localStorage.setItem("authToken", json.authToken);
-            window.localStorage.setItem("userId", json.userId);
-            this.setState({loggedIn: true})
-            this.props.loginHandler();
+            if(json !== undefined) {
+                console.log(json)
+                window.localStorage.setItem("authToken", json.authToken);
+                window.localStorage.setItem("userId", json.userId);
+                this.setState({loggedIn: true})
+                this.props.loginHandler();
+            }
         })
         .catch(error => {
             console.log(error);
@@ -59,6 +68,7 @@ class Login extends React.Component {
                 <input type="password" name="password" placeholder="password" onChange={this.onChange}></input>
                 <br />
                 <input type="submit" value="login" onClick={this.login}></input>
+                {this.state.error ? <p>{this.state.errorMessage}</p> : null}
             </div>
         )
     }
