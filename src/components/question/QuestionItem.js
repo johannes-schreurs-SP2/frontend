@@ -1,18 +1,48 @@
-import React from 'react';
-import AnswerItem from '../answer/AnswerItem'
+import React, { useState } from 'react';
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, PieChart, Pie } from 'recharts';
 
 const QuestionItem = ({question}) => {
+    let questionData = [];
+    let [showBar, setShowBar] = useState(true);
+
+    question.answers.map((answer, index )=> {
+        let test = {}
+        test.name = answer.answer
+        test.index = index;
+        let i = 0;
+        answer.userAnswers.map(userAnswer => {
+            test.amount = userAnswer.answered ? i += 1 : i+=0
+        })
+        questionData.push(test);
+    })
+
+    console.log(questionData);
+
+    const clickHandler = () => {
+        setShowBar(!showBar);
+    }
 
     return (
-        <li>
-            <p>{question.question}</p>
+        <div>
+            <button onClick={clickHandler}>Show {showBar ? "Circle" : "Bar"}</button>
             {
-                question.answers.map(answer => {
-                    return <AnswerItem key={answer.id} answer={answer}/>
-                })
-            }
-        </li>
+                showBar ? <BarChart width={730} height={250} data={questionData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey="amount" fill="#8884d8" />
+                    </BarChart> : 
+                    <PieChart width={730} height={250}>
+                        <Pie data={questionData} dataKey="amount" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill="#8884d8" label />
+                        <Tooltip />
+                    </PieChart>
+                }
+        </div>
     )
 }
 
 export default QuestionItem;
+
+
