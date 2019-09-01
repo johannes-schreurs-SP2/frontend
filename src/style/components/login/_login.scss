@@ -1,0 +1,47 @@
+.login {
+    height: 100vh;
+}
+
+.login_container{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin: 0 auto;
+    align-content: center;
+    justify-content: center;    
+}
+
+.login__button {
+    border: 1px solid black;
+    border-top: none;
+    height: $xl-size;
+    font-size: $l-size;
+    font-weight: bold;
+
+    &:hover {
+        cursor: pointer;
+        background-color: lightblue;
+        color: white;
+    }
+}
+
+
+.login__input-container {
+    display: flex;
+    flex-direction: row;
+    height: $xl-size;
+}
+
+.login__input-container-input {
+    border: 1px solid black;
+    flex-grow: 1;
+    padding: 1rem;
+}
+
+.login__input-container-input--nbt {
+    border-top: transparent;
+}
+
+.login__intro {
+    text-align: center;
+}

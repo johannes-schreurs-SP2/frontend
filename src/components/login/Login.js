@@ -59,16 +59,19 @@ class Login extends React.Component {
     render() {
 
         return(
-            <div>
-                <h2>Login page</h2>
-                <label>Email</label>
-                <input type="text" name="email" placeholder="email" onChange={this.onChange}></input>
-                <br />
-                <label>Password</label>
-                <input type="password" name="password" placeholder="password" onChange={this.onChange}></input>
-                <br />
-                <input type="submit" value="login" onClick={this.login}></input>
-                {this.state.error ? <p>{this.state.errorMessage}</p> : null}
+            <div className="login">
+                <h1 className="login__intro">Survey app</h1>
+                <div className="login_container">
+                    <h2 className="login__header">Login page</h2>
+                    <div className="login__input-container">
+                        <input className="login__input-container-input" type="text" name="email" placeholder="email" onChange={this.onChange}></input>
+                    </div>
+                    <div className="login__input-container">
+                        <input className="login__input-container-input login__input-container-input--nbt" type="password" name="password" placeholder="password" onChange={this.onChange}></input>
+                    </div>
+                    <input className="login__button" type="submit" value="Login" onClick={this.login}></input>
+                    {this.state.error ? <p class="login__error">{this.state.errorMessage}</p> : null}
+                </div>
             </div>
         )
     }
