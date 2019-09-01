@@ -27,3 +27,15 @@
     padding-left: 20px;
     list-style-type: square;
 }
+
+.survey__collection {
+    display: flex;
+    align-items: baseline;
+    padding-left: 1rem;
+    color: black;
+    padding-right: 1rem;
+}
+
+.survey__collection p {
+    margin-left: 2rem;
+}

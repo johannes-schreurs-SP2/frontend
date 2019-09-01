@@ -214,7 +214,7 @@ class UpdateSurveyPage extends React.Component {
                     //some sweet sweet conditional chaining
                     (this.state.loading) ? <div>Fetching survey...</div> : (
                         (!this.state.survey) ? null : (
-                            <div>
+                            <div className="update">
                                 <h1>{this.state.survey.name}</h1>
                                 <ul>
                                     {   

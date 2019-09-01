@@ -167,37 +167,32 @@ class Home extends Component {
         }
 
         return(
-                <div>
-                    <Logout logoutHandler={this.logoutHandler}/>
+            <div>
+                <Logout logoutHandler={this.logoutHandler}/>
+                <div className="home__container">
                     <h2>Your surveys:</h2>
                     {
                     (this.state.loading) ? <div>Fetching your surveys...</div> : (
                             (!this.state.surveys) ? <div>No surveys created yet!</div> : this.state.surveys.map(survey => {
                                 return (
-                                    <div key={survey.id}>
+                                    <div className="home__container-survey" key={survey.id}>
                                         <Link to={"/survey/" + survey.id}>
                                             <SurveyItem survey={survey}/>
                                         </Link>
-                                        <Link to={"/update/" + survey.id}>
-                                        ----Update survey
+                                        <Link className="home__container-survey-update" to={"/update/" + survey.id}>
+                                        Update this survey.
                                         </Link>
-                                        <button onClick={() => this.deleteHandler(survey.id)}>Remove this survey</button>
-                                        <br/>
-                                        <br/>
-                                        <br/>
+                                        <button className="home__container-survey-delete" onClick={() => this.deleteHandler(survey.id)}>Remove this survey</button>
                                     </div>
                                 )
                             })
                     )
                     }
-                    <label>Survey Name:</label>
-                    <input name={"name"} onChange={this.changeHandler}/>
-                    <button onClick={this.submitHandler}>Create Survey</button>
-                    
-                    <br />
-                    <br />
-                    <br />
-                    <br />
+                    <div className="home__container-create">
+                        <label className="home__container-label">Survey Name:</label>
+                        <input className="home__container-input" name={"name"} onChange={this.changeHandler}/>
+                        <button className="home__container-button" onClick={this.submitHandler}>Create Survey</button>
+                    </div>
 
                     <details>
                     <summary style={
@@ -221,6 +216,7 @@ class Home extends Component {
                     }
                     </details>
                 </div>
+            </div>
         )
     }
 }
