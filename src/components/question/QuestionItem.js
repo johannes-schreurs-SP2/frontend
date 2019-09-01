@@ -22,7 +22,7 @@ const QuestionItem = ({question}) => {
 
     return (
         <div>
-            <button onClick={clickHandler}>Show {showBar ? "circle graph" : "bar graph"}</button>
+            <button class="question-item__button" onClick={clickHandler}>Show {showBar ? "circle graph" : "bar graph"}</button>
             {
                 showBar ? <BarChart width={730} height={250} data={questionData}>
                         <CartesianGrid strokeDasharray="3 3" />

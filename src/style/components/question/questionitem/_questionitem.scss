@@ -1,0 +1,9 @@
+.question-item__button {
+    margin: $m-size 0;
+    border: 1px solid black;
+
+    &:hover {
+        cursor: pointer;
+        background: lightblue;
+    }
+}
