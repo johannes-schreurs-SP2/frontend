@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import AppRouter from './components/routers/AppRouter';
+import './style/styles.scss';
 
 ReactDOM.render(<AppRouter />, document.getElementById('root'));
 
