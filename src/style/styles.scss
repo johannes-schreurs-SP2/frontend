@@ -1,0 +1,13 @@
+//Base
+//Global variable settings
+@import './base/settings';
+
+//Global resets and settings
+@import './base/base';
+
+
+//Components
+@import './components/login/login';
+@import './components/header/header';
+@import './components/survey/surveylist';
+@import './components/question/questionitem/questionitem'
