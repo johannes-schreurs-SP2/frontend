@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom'
 const Header = () => {
 
     return (
-        <Link to="/">Back to home</Link>
+        <div className="banner">
+            <Link className="banner-item" to="/">Back to home</Link>
+        </div>
     )
 }
 

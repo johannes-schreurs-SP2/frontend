@@ -1,0 +1,29 @@
+.banner {
+    width: 100%;
+    height: $xl-size;
+    display: flex;
+    border-bottom: 2px solid black;
+}
+
+.banner-item {
+    align-self: center;
+    padding-left: 2rem;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 2rem;
+
+    &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}
+
+.banner-item--button {
+    text-decoration: none;
+    border: none;
+    padding: 1rem;
+    margin-left: 2rem;
+    background: transparent;
+
+}
