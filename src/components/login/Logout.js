@@ -18,8 +18,8 @@ const Logout = (props) => {
     };
 
     return (
-        <div>
-            <button onClick={logout}>Logout</button>
+        <div className="banner">
+            <button className="banner-item banner-item--button" onClick={logout}>Logout</button>
         </div>
     );
 };
