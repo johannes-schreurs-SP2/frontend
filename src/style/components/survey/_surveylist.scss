@@ -1,0 +1,29 @@
+.surveylist {
+    display: flex;
+    width: 70%;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.surveylist__container {
+    border-top: 2px solid black;
+    margin-bottom: 2rem;
+}
+
+.surveylist__title {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.surveylist__question-title {
+    font-size: $l-size;
+    display: block;
+    margin-top: 1rem;
+}  
+
+.surveylist__question-list {
+    margin-top: 0;
+    padding-left: 20px;
+    list-style-type: square;
+}

@@ -42,28 +42,24 @@ class SurveyList extends Component {
 
 
         return(
-            <div>
+            <div className="surveylist">
             {
                 (this.state.loading) ? <div>Fetching the survey...</div> : (
                     <div>
-                        <h1>{this.state.survey.name}</h1>
+                        <h1 className="surveylist__title">{this.state.survey.name}</h1>
                         {
                             this.state.survey.questions.map(question => {
                                 return(
-                                    <div key={question.id}>
-                                        <label>{question.question}</label>
-
-                                        <ul>
+                                    <div className="surveylist__container" key={question.id}>
+                                        <label className="surveylist__question-title">{question.question}</label>
+                                        <ul className="surveylist__question-list">
                                         {
                                             question.answers.map(answer => {
                                                 return(
                                                     <AnswerItem key={answer.id}  answer={answer}/>
                                                 )
-                                            })
-                                            
-                                            
+                                            })   
                                         }
-                                       
                                         <QuestionItem question={question}/>
                                         </ul>
                                     </div>
